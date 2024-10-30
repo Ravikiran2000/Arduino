@@ -1,0 +1,40 @@
+//Distance measurement (Working)
+
+#include <TM1637Display.h>
+
+#define CLK 9  // Pin connected to the CLK pin of TM1637
+#define DIO 8  // Pin connected to the DIO pin of TM1637
+const int trigPin = 10;  // Trigger pin
+const int echoPin = 11; // Echo pin
+long duration;
+int dist;
+
+TM1637Display display(CLK, DIO);
+void setup() {
+  Serial.begin(9600);  // Start serial communication at a baud rate of 9600
+  display.setBrightness(0x0f); // Set the brightness (0x00 to 0x0f)
+  Serial.println("Enter numbers to display:");
+  pinMode(trigPin, OUTPUT);
+  pinMode(echoPin, INPUT);
+}
+void loop() {
+
+  digitalWrite(trigPin, LOW);
+  delayMicroseconds(2);
+  digitalWrite(trigPin, HIGH);
+  delayMicroseconds(10);
+  digitalWrite(trigPin, LOW);
+
+  // Read the echo
+  duration = pulseIn(echoPin, HIGH);
+  dist = (duration / 2) / 29.1;
+
+  Serial.print("Distance: ");
+  Serial.print(dist);
+  Serial.println(" cm");
+
+  delay(1000);
+
+    display.showNumberDec(dist, true);  // Display the number on the 7-segment display
+    delay(2000);
+}
