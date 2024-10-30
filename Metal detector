@@ -1,0 +1,23 @@
+//Metal detector (working)
+
+int buzzerPin = 3; // Pin connected to the buzzer
+int hallPin = 2;   // Pin connected to the Hall Effect sensor
+int sensorValue = 0; // Variable to store sensor value
+
+void setup() {
+  pinMode(buzzerPin, OUTPUT); // Set the buzzer pin as an output
+  pinMode(hallPin, INPUT);    // Set the Hall Effect sensor pin as input
+  Serial.begin(9600);         // Start serial communication for debugging
+}
+
+void loop() {
+  sensorValue = digitalRead(hallPin); // Read the value from the Hall Effect sensor
+  Serial.println(sensorValue);        // Print the sensor value for debugging
+
+  if (sensorValue == HIGH) {
+    digitalWrite(buzzerPin, HIGH); // Turn the buzzer on
+  } else {
+    digitalWrite(buzzerPin, LOW);  // Turn the buzzer off
+  }
+
+  delay(100); // Small delay for stability
