@@ -1,0 +1,28 @@
+//AUTOMATIC DOOR OPENER (Working)
+
+#include <Servo.h>
+
+Servo gateServo;  // Create a servo object to control the gate
+
+const int irSensorPin = 2;  // IR sensor connected to digital pin 2
+const int servoPin = 6;     // Servo motor connected to digital pin 6
+
+void setup() {
+  gateServo.attach(servoPin);  // Attach the servo to the pin
+  pinMode(irSensorPin, INPUT); // Set the IR sensor pin as input
+  gateServo.write(0);          // Initialize the gate to the closed position
+}
+
+void loop() {
+  int sensorValue = digitalRead(irSensorPin); // Read the value from the IR sensor
+
+  if (sensorValue == LOW) {  // If the sensor detects an object
+    gateServo.write(90);      // Open the gate (90 degrees)
+    delay(2000);
+  } else {
+    gateServo.write(0);       // Close the gate (0 degrees)
+    delay(2000);
+  }
+
+  delay(100);  // Small delay to stabilize the sensor reading
+}
