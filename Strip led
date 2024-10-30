@@ -1,0 +1,113 @@
+//Strip led
+#include <FastLED.h>
+
+#define LED_PIN 6
+#define NUM_LEDS 60
+CRGB leds[NUM_LEDS];
+
+void setup() {
+  FastLED.addLeds<WS2812, LED_PIN, GRB>(leds, NUM_LEDS);
+}
+
+void loop() {
+  sequenceBlink(100);
+}
+
+void sequenceBlink(int delayTime) {
+  CRGB color = CHSV(random(0, 255), 255, 255); // Assigns a random color
+  for(int i = 0; i < NUM_LEDS; i++) {
+    leds[i] = color; // Uses the same color for each LED
+    FastLED.show();
+    delay(delayTime);
+    leds[i] = CRGB::Black; // Turns off the current LED
+  }
+}
+-----------------------------------------------------------------
+#include <FastLED.h>
+
+#define LED_PIN 6
+#define NUM_LEDS 60
+CRGB leds[NUM_LEDS];
+
+void setup() {
+  FastLED.addLeds<WS2812, LED_PIN, GRB>(leds, NUM_LEDS);
+}
+
+void loop() {
+  blinkColor(CRGB::Red, 500);
+  blinkColor(CRGB::Green, 500);
+  blinkColor(CRGB::Blue, 500);
+  blinkColor(CRGB::Yellow, 500);
+  blinkColor(CRGB::Purple, 500);
+  blinkColor(CRGB::White, 500);
+}
+
+void blinkColor(CRGB color, int delayTime) {
+  for(int i = 0; i < NUM_LEDS; i++) {
+    leds[i] = color;
+  }
+  FastLED.show();
+  delay(delayTime);
+  
+  for(int i = 0; i < NUM_LEDS; i++) {
+    leds[i] = CRGB::Black;
+  }
+  FastLED.show();
+  delay(delayTime);
+}
+-----------------------------------------------------------------
+//Random colour
+#include <FastLED.h>
+
+#define LED_PIN 6
+#define NUM_LEDS 60
+
+CRGB leds[NUM_LEDS];
+
+void setup() {
+  FastLED.addLeds<WS2812, LED_PIN, GRB>(leds, NUM_LEDS);
+}
+
+void loop() {
+  blinkDifferentColors(500);
+}
+
+void blinkDifferentColors(int delayTime) {
+  for(int i = 0; i < NUM_LEDS; i++) {
+    leds[i] = CHSV(random(0, 255), 255, 255); // Assigns a random color to each LED
+  }
+  FastLED.show();
+  delay(delayTime);
+  
+  for(int i = 0; i < NUM_LEDS; i++) {
+    leds[i] = CRGB::Black; // Turns off all LEDs
+  }
+  FastLED.show();
+  delay(delayTime);
+}
+----------------------------------------------------------------------------
+
+//Blink each LED with different colour
+#include <FastLED.h>
+
+#define LED_PIN 6
+#define NUM_LEDS 60
+
+CRGB leds[NUM_LEDS];
+
+void setup() {
+  FastLED.addLeds<WS2812, LED_PIN, GRB>(leds, NUM_LEDS);
+}
+
+void loop() {
+  sequenceBlink(100);
+}
+
+void sequenceBlink(int delayTime) {
+  for(int i = 0; i < NUM_LEDS; i++) {
+    leds[i] = CHSV(random(0, 255), 255, 255); // Assigns a random color to each LED
+    FastLED.show();
+    delay(delayTime);
+    leds[i] = CRGB::Black; // Turns off the current LED
+  }
+}
