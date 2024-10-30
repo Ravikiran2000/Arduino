@@ -1,0 +1,23 @@
+//LED IR (Working)
+
+int ledpin = 6;         // Pin connected to LED at pin 6
+int IRpin = 2;          // Pin connected to IR sensor at pin 2
+
+void setup() {
+  pinMode(ledpin, OUTPUT); //set the LED pin as an output
+  pinMode(IRpin, INPUT);   //set the IR sensor as input
+  digitalWrite(ledpin, LOW); //Turn the LED off initially
+  Serial.begin(9600); // Start serial communication for debugging
+}
+
+void loop() {
+  int sensorvalue = digitalRead(IRpin); //Read value from IR sensor
+  Serial.println(sensorvalue); // Print the sensor value
+
+  if(sensorvalue == HIGH) {
+    digitalWrite(ledpin, HIGH); //Turn the LED on
+  }
+  else {
+    digitalWrite(ledpin, LOW); //Turn the LED off
+  }
+}
