@@ -1,0 +1,25 @@
+//7 segment (Working)
+
+#include <TM1637Display.h>
+
+// Define the connections pins
+#define CLK 6
+#define DIO 5
+#define LED 3
+
+TM1637Display display(CLK, DIO);
+
+void setup() {
+  display.setBrightness(0x0f); // Set the brightness (0x00 to 0x0f)
+  pinMode(LED, OUTPUT);
+}
+
+void loop() {
+  for (int i = 0; i < 10000; i++) {
+    display.showNumberDec(i, true); // Display the number with leading zeros
+    digitalWrite(LED, HIGH);
+    delay(1000); // Wait for 1 second
+    digitalWrite(LED, LOW);
+    delay(1000);
+  }
+}
