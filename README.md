@@ -1,3 +1,0 @@
-# Arduino
-
-Projects on Arduino

@@ -1,0 +1,41 @@
+//SUN TRACKER (Working)
+
+#include <Servo.h>
+
+Servo myservo;
+
+int ldrPin1 = A0;  // LDR 1
+int ldrPin2 = A1;  // LDR 2
+int ldrValue1 = 0; // To store the LDR values
+int ldrValue2 = 0;
+
+int servoPin = 9;  // Servo motor pin
+int pos = 90;      // Initial position of the servo
+
+void setup() {
+  myservo.attach(servoPin);  // Attaches the servo on pin 9 to the servo object
+  myservo.write(pos);        // Start with the servo at the 90-degree position
+  Serial.begin(9600);
+}
+
+void loop() {
+  ldrValue1 = analogRead(ldrPin1);  // Read LDR 1
+  ldrValue2 = analogRead(ldrPin2);  // Read LDR 2
+
+  Serial.print("LDR1: ");
+  Serial.print(ldrValue1);
+  Serial.print("  LDR2: ");
+  Serial.println(ldrValue2);
+
+  if (ldrValue1 > ldrValue2) {
+    pos = pos - 1;  // Move servo to the left
+  } 
+  else if (ldrValue1 < ldrValue2) {
+    pos = pos + 1;  // Move servo to the right
+  }
+
+  // Ensure the servo position stays within bounds (0 to 180 degrees)
+  pos = constrain(pos, 0, 180);
+  myservo.write(pos);
+  delay(15);  // Small delay to allow the servo to move
+}
