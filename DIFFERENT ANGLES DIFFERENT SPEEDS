@@ -1,0 +1,46 @@
+//DIFFERENT ANGLES DIFFERENT SPEEDS (Working)
+
+#include <Servo.h>  // Include the Servo library
+
+Servo myServo;      // Create a Servo object to control the servo motor
+
+int potPin = A0;         // Pin connected to the potentiometer
+int currentAngle = 0;    // Variable to store the current angle of the servo
+int previousAngle = -1;  // Store the previous angle to compare changes
+
+void setup() {
+  myServo.attach(6);          // Attach the servo motor to pin 6
+  Serial.begin(9600);          // Start serial communication for monitoring
+}
+
+
+void loop() {
+  // Read the potentiometer value (range 0-1023)
+  int potValue = analogRead(potPin);
+  
+  // Map the potentiometer value to servo angle (0-180 degrees)
+  currentAngle = map(potValue, 0, 1023, 0, 180);
+
+  // Only proceed if the angle has changed significantly (threshold: 1 degree)
+  if (abs(currentAngle - previousAngle) > 1) {
+    // Move the servo to the new angle
+    myServo.write(currentAngle);
+    
+    // Calculate square and square root of the current angle
+    int squaredValue = sq(currentAngle);
+    float sqrtValue = sqrt(currentAngle);
+    
+    // Display the results on the serial monitor
+    Serial.print("Current Angle: ");
+    Serial.println(currentAngle);
+    Serial.print("Squared Value: ");
+    Serial.println(squaredValue);
+    Serial.print("Square Root: ");
+    Serial.println(sqrtValue);
+    
+    // Update the previous angle
+    previousAngle = currentAngle;
+
+    delay(100);  // Add a small delay for smoother behavior
+  }
+}
