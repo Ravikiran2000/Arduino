@@ -1,0 +1,24 @@
+//Bluetooth (Working)
+
+#include <TM1637Display.h>
+#include <SoftwareSerial.h>
+
+#define CLK 9       // Pin connected to the CLK pin of TM1637
+#define DIO 8       // Pin connected to the DIO pin of TM1637
+
+TM1637Display display(CLK, DIO);
+SoftwareSerial BTSerial(10, 11); // RX | TX
+
+void setup() {
+  Serial.begin(9600);  // Start serial communication at a baud rate of 9600
+  display.setBrightness(0x0f); // Set the brightness (0x00 to 0x0f)
+  BTSerial.begin(9600);  // Set baud rate of the Bluetooth module to match
+}
+
+void loop() {
+    int number = BTSerial.parseInt();
+    display.showNumberDec(number, true);  // Display the number
+     if (BTSerial.available()) {
+    Serial.println("Data received!");
+  }
+}
