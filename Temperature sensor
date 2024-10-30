@@ -1,0 +1,44 @@
+//Temperature sensor (Working)
+
+#include <TM1637Display.h>
+#include "DHT.h"
+
+#define DHTPIN 2     // Pin connected to the DHT11
+#define DHTTYPE DHT11 // DHT 11
+#define CLK 3       // Pin connected to the CLK pin of TM1637
+#define DIO 4       // Pin connected to the DIO pin of TM1637
+#define fan 5
+
+DHT dht(DHTPIN, DHTTYPE);
+TM1637Display display(CLK, DIO);
+
+void setup() {
+  dht.begin();
+  display.setBrightness(0x0f); // Set the brightness (0x00 to 0x0f)
+  pinMode(fan, OUTPUT);
+  Serial.begin(9600);
+}
+
+void loop() {
+  float temp = dht.readTemperature();  // Read temperature in Celsius
+  
+  if (isnan(temp)) {
+    Serial.println("Failed to read from DHT sensor!");
+    return;
+  }
+
+  Serial.println("Temperature: ");
+  Serial.print(temp);
+  Serial.println(" *C");
+
+  display.showNumberDec(temp, false, 2, 2); // Display temperature with 2 digits
+
+  if(temp >= 45)
+  {
+    digitalWrite(fan, HIGH);
+  }
+  else{
+    digitalWrite(fan, LOW);
+  }
+  delay(2000);  // Wait for 2 seconds before the next reading
+}
