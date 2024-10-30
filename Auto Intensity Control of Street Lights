@@ -1,0 +1,32 @@
+//Auto Intensity Control of Street Lights: (Working)
+
+#define IRpin 3
+int ledPin = 6; // Pin connected to the LED
+int sensorval = 0;
+
+void setup() {
+  pinMode(ledPin, OUTPUT); // Set the LED pin as an output
+  pinMode(IRpin, INPUT);
+  Serial.begin(9600);
+}
+
+void loop() {
+  sensorval = digitalRead(IRpin);
+  Serial.println(sensorval);
+  if(sensorval == LOW)
+  {
+      //digitalWrite(ledPin, HIGH);
+      for (int brightness = 0; brightness <= 255; brightness++) {
+          analogWrite(ledPin, brightness); // Set the LED brightness
+          delay(10); // Wait for 10 milliseconds
+    }
+      for (int brightness = 255; brightness >= 0; brightness--) {
+          analogWrite(ledPin, brightness); // Set the LED brightness
+          delay(10); // Wait for 10 milliseconds
+    }
+  }
+    else{
+      digitalWrite(ledPin, LOW);
+    }
+  
+}
