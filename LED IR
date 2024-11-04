@@ -21,3 +21,31 @@ void loop() {
     digitalWrite(ledpin, LOW); //Turn the LED off
   }
 }
+
+//LED ON
+
+int ledpin = 6;         // Pin connected to LED at pin 6
+int IRpin = 2;          // Pin connected to IR sensor at pin 2
+bool ledState = LOW;    // Variable to keep track of the LED state
+bool previousSensorState = HIGH; // Track previous state of IR sensor
+
+void setup() {
+  pinMode(ledpin, OUTPUT); //set the LED pin as an output
+  pinMode(IRpin, INPUT);   //set the IR sensor as input
+  digitalWrite(ledpin, LOW); //Turn the LED off initially
+  Serial.begin(9600); // Start serial communication for debugging
+}
+
+void loop() {
+  int sensorvalue = digitalRead(IRpin); //Read value from IR sensor
+  Serial.println(sensorvalue); // Print the sensor value
+
+  // Detect state change
+  if (sensorvalue == LOW && previousSensorState == HIGH) {
+    ledState = !ledState; // Toggle the LED state
+  }
+
+  digitalWrite(ledpin, ledState ? HIGH : LOW); // Update the LED state
+  previousSensorState = sensorvalue; // Update the previous sensor state
+  delay(50);
+}
