@@ -1,0 +1,26 @@
+//Clap Fan
+#define Motor 2
+#define Sound A0 // Assuming your sound sensor is connected to analog pin A0
+int threshold = 500; // Adjust this threshold value based on your sound sensor's sensitivity
+
+bool MotorState = LOW; // Variable to keep track of the motor state
+
+void setup() {
+  pinMode(Motor, OUTPUT);
+  digitalWrite(Motor, LOW); // Turn the motor off initially
+  Serial.begin(9600); // Start serial communication for debugging
+}
+
+void loop() {
+  int sensorvalue = analogRead(Sound); // Read value from sound sensor
+  Serial.println(sensorvalue); // Print the sensor value
+
+  // Detect clap
+  if (sensorvalue > threshold) {
+    MotorState = !MotorState; // Toggle the motor state
+    //delay(500); // Debounce delay to prevent multiple toggles from a single clap
+  }
+
+  digitalWrite(Motor, MotorState ? HIGH : LOW); // Update the motor state
+  delay(50); // Small delay to stabilize readings
+}
