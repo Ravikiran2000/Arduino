@@ -1,4 +1,4 @@
-//Auto Intensity Control of Street Lights: (Working)
+//Street Lights Intensity Control on Detecting Movement
 
 #define IRpin 3
 int ledPin = 6; // Pin connected to the LED
@@ -28,5 +28,4 @@ void loop() {
     else{
       digitalWrite(ledPin, LOW);
     }
-  
 }
